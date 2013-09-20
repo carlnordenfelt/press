@@ -7,6 +7,8 @@ import play.mvc.Router;
 import play.vfs.VirtualFile;
 import press.io.FileIO;
 
+import play.Logger;
+
 public abstract class RequestHandler {
     Map<String, Boolean> files = new HashMap<String, Boolean>();
 
@@ -50,10 +52,10 @@ public abstract class RequestHandler {
             files.put(fileName, true);
             return;
         }
-
-        SourceFileManager srcManager = getSourceManager();
-        throw new DuplicateFileException(srcManager.getFileType(), fileName,
-                srcManager.getTagName());
+        Logger.info("Ignoring duplicate file: " + fileName);
+        //SourceFileManager srcManager = getSourceManager();
+        //throw new DuplicateFileException(srcManager.getFileType(), fileName,
+        //        srcManager.getTagName());
     }
 
     protected static String getCompressedUrl(String action, String requestKey) {
